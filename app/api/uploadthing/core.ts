@@ -1,13 +1,16 @@
-import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { auth } from "@clerk/nextjs";
+import { createUploadthing, type FileRouter } from "uploadthing/next";
+import { NextApiRequest } from 'next';
 
 const f = createUploadthing();
 
 const handleAuth = () => {
   const { userId } = auth();
-  if (!userId) throw new Error("Unauthorized");
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
   return { userId };
-};
+}; // Fake auth function
 
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
