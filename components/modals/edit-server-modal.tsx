@@ -37,18 +37,18 @@ export const EditServerModal = () => {
     imageUrl: z.string().min(1, { message: "Server image is required" }),
   });
   const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      imageUrl: "",
-    },
-  });
-  useEffect(() => {
-    if (server) {
-      form.setValue("name", server.name);
-      form.setValue("imageUrl", server.imageUrl);
-    }
-  }, [server, form]);
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+          name: "",
+          imageUrl: "",
+        },
+    });
+    useEffect(() => {
+      if (server) {
+        form.setValue("name", server.name);
+        form.setValue("imageUrl", server.imageUrl);
+      }
+    }, [server, form]);
   const isLoading = form.formState.isSubmitted;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
