@@ -28,7 +28,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
 import { ChannelType } from "@prisma/client";
 
@@ -45,6 +45,7 @@ export const CreateChannelModal = () => {
   const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "createChannel";
   const router = useRouter();
+  const params = useParams();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,7 +56,7 @@ export const CreateChannelModal = () => {
   const isLoading = form.formState.isSubmitted;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/server", values);
+      await axios.patch(`/api/channels?serverId=${params?.serverId}`, values);
       form.reset();
       router.refresh();
       onClose();
