@@ -80,7 +80,10 @@ export const ServerSearch = ({ data }: ServerSearchProps) => {
               <CommandGroup key={label} heading={label}>
                 {data.map(({ id, icon, name }) => {
                   return (
-                    <CommandItem key={id}>
+                    <CommandItem
+                      key={id}
+                      onSelect={() => onClick({ id, type })}
+                    >
                       {icon} <span>{name}</span>
                     </CommandItem>
                   );
