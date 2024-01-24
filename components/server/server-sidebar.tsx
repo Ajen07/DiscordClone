@@ -10,6 +10,7 @@ import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 import { Separator } from "../ui/separator";
 import { ServerSection } from "./server-section";
 import { ServerChannel } from "./server-channel";
+import { ServerMember } from "./server-member";
 
 interface ServerSidebarProps {
   serverId: string;
@@ -133,16 +134,18 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
               role={role}
               label="Text Channels"
             />
-            {textChannnels.map((channel) => {
-              return (
-                <ServerChannel
-                  key={channel.id}
-                  channel={channel}
-                  server={server}
-                  role={role}
-                />
-              );
-            })}
+            <div className="space-y-[2px]">
+              {textChannnels.map((channel) => {
+                return (
+                  <ServerChannel
+                    key={channel.id}
+                    channel={channel}
+                    server={server}
+                    role={role}
+                  />
+                );
+              })}
+            </div>
           </div>
         )}
         {!!audioChannels?.length && (
@@ -153,34 +156,53 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
               role={role}
               label="Voice Channels"
             />
-            {audioChannels.map((channel) => {
-              return (
-                <ServerChannel
-                  key={channel.id}
-                  channel={channel}
-                  server={server}
-                  role={role}
-                />
-              );
-            })}
+            <div className="space-y-[2px]">
+              {audioChannels.map((channel) => {
+                return (
+                  <ServerChannel
+                    key={channel.id}
+                    channel={channel}
+                    server={server}
+                    role={role}
+                  />
+                );
+              })}
+            </div>
           </div>
         )}
-        {!!videoChannels?.length && (
+        <div className="space-y-[2px]">
+          {!!videoChannels?.length && (
+            <div className="mb-2">
+              <ServerSection
+                sectionType="channels"
+                channelType={ChannelType.VIDEO}
+                role={role}
+                label="Video Channels"
+              />
+              {videoChannels.map((channel) => {
+                return (
+                  <ServerChannel
+                    key={channel.id}
+                    channel={channel}
+                    server={server}
+                    role={role}
+                  />
+                );
+              })}
+            </div>
+          )}
+        </div>
+        {!!members?.length && (
           <div className="mb-2">
             <ServerSection
-              sectionType="channels"
-              channelType={ChannelType.VIDEO}
+              sectionType="members"
               role={role}
-              label="Video Channels"
+              label="Members"
+              server={server}
             />
-            {audioChannels.map((channel) => {
+            {members.map((member) => {
               return (
-                <ServerChannel
-                  key={channel.id}
-                  channel={channel}
-                  server={server}
-                  role={role}
-                />
+                <ServerMember key={member.id} member={member} server={server} />
               );
             })}
           </div>
